@@ -12,12 +12,10 @@
 /* --- USER SETTINGS --- /
 :root {
 --glass-rgb: 12 12 18; / RGB format (R G B) /
---glass-opacity: 0.35; / 0 to 1 */
-
---glass-sidebar-shade: 0.18; /* Darkens sidebars & titlebar /
+--glass-opacity: 0.35; / 0 to 1 /
+--glass-sidebar-shade: 0.18; / Darkens sidebars & titlebar /
 --glass-float-opacity: 0.90; / Opacity for menus/popouts (keep high for readability) */
 --glass-blur: 16px;
-
 --glass-text-shadow: 0 1px 3px rgba(0, 0, 0, 0.55);
 }
 
@@ -85,6 +83,8 @@ background: transparent !important;
 /* Misc */
 --scrollbar-auto-track: transparent !important;
 --scrollbar-thin-track: transparent !important;
+
+
 }
 
 /* Settings background /
