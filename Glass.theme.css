@@ -1,137 +1,112 @@
-/**
- * @name Glass
- * @author glitschyy
- * @version 1.0.0
- * @description A fully transparent Discord theme that lets your desktop wallpaper shine through. Window opacity, tint color, sidebar shading and blur strength are adjustable.
- */
+/
 
-/* =====================================================================
-   SETTINGS - adjust everything here
-   ===================================================================== */
+@name Glass
+
+@author glitschyy
+
+@version 1.0.0
+
+@description Transparent theme that lets your wallpaper shine through. Adjust opacity, colors, and blur in the file.
+*/
+
+/* --- USER SETTINGS --- /
 :root {
-  /* Window tint color as "R G B" (0-255 each). Dark blue-gray = 12 12 18 */
-  --glass-rgb: 12 12 18;
+--glass-rgb: 12 12 18; / RGB format (R G B) /
+--glass-opacity: 0.35; / 0 to 1 */
 
-  /* Overall window opacity: 0 = fully transparent, 1 = fully opaque */
-  --glass-opacity: 0.35;
+--glass-sidebar-shade: 0.18; /* Darkens sidebars & titlebar /
+--glass-float-opacity: 0.90; / Opacity for menus/popouts (keep high for readability) */
+--glass-blur: 16px;
 
-  /* How much darker the server list, channel list and title bar are than the chat (0 = same as chat) */
-  --glass-sidebar-shade: 0.18;
-
-  /* Opacity of menus, popouts, dialogs and the settings screen (keep high for readability) */
-  --glass-float-opacity: 0.90;
-
-  /* Blur strength behind menus, popouts and dialogs. 0px = off */
-  --glass-blur: 16px;
-
-  /* Text shadow to keep text readable on bright wallpapers. "none" = off */
-  --glass-text-shadow: 0 1px 3px rgb(0 0 0 / 0.55);
+--glass-text-shadow: 0 1px 3px rgba(0, 0, 0, 0.55);
 }
 
-/* =====================================================================
-   Derived colors (do not edit)
-   ===================================================================== */
+/* Internal vars (don't touch unless you know what you're doing) */
 :root {
-  --glass-tint: rgb(var(--glass-rgb) / var(--glass-opacity));
-  --glass-float: rgb(var(--glass-rgb) / var(--glass-float-opacity));
-  --glass-shade-1: rgb(0 0 0 / var(--glass-sidebar-shade));
-  --glass-shade-2: rgb(0 0 0 / calc(var(--glass-sidebar-shade) * 1.6));
-  --glass-input: rgb(0 0 0 / 0.25);
+--glass-tint: rgb(var(--glass-rgb) / var(--glass-opacity));
+--glass-float: rgb(var(--glass-rgb) / var(--glass-float-opacity));
+--glass-shade-1: rgba(0, 0, 0, var(--glass-sidebar-shade));
+--glass-shade-2: rgba(0, 0, 0, calc(var(--glass-sidebar-shade) * 1.6));
+--glass-input: rgba(0, 0, 0, 0.25);
 }
 
-/* =====================================================================
-   One single tint layer for the whole window.
-   All Discord surfaces are made transparent so that opacity
-   does not stack up across nested elements.
-   ===================================================================== */
+/* Base transparency */
 html {
-  background: var(--glass-tint) !important;
+background: var(--glass-tint) !important;
 }
 
 body,
 #app-mount,
-[class^="app_"], [class*=" app_"],
-[class^="bg_"], [class*=" bg_"],
+[class*="app_"],
+[class*="bg_"],
 [class*="appAsidePanelWrapper_"],
 [class*="titleBar_"] {
-  background: transparent !important;
+background: transparent !important;
 }
 
-/* =====================================================================
-   Override Discord color variables
-   ===================================================================== */
-:root,
-.theme-dark, .theme-light, .theme-darker, .theme-midnight,
-.visual-refresh {
-  /* Chat and main surfaces: transparent */
-  --background-primary: transparent !important;
-  --background-mobile-primary: transparent !important;
-  --chat-background: transparent !important;
-  --chat-background-default: transparent !important;
-  --background-base-low: transparent !important;
-  --bg-overlay-chat: transparent !important;
+/* Discord variables override /
+.theme-dark, .theme-light, :root {
+/ Main chat */
+--background-primary: transparent !important;
+--background-mobile-primary: transparent !important;
+--chat-background: transparent !important;
+--chat-background-default: transparent !important;
+--background-base-low: transparent !important;
+--bg-overlay-chat: transparent !important;
 
-  /* Channel list and member list: slightly darkened */
-  --background-secondary: var(--glass-shade-1) !important;
-  --background-secondary-alt: var(--glass-shade-1) !important;
-  --background-mobile-secondary: var(--glass-shade-1) !important;
-  --background-base-lower: var(--glass-shade-1) !important;
+/* Lists */
+--background-secondary: var(--glass-shade-1) !important;
+--background-secondary-alt: var(--glass-shade-1) !important;
+--background-mobile-secondary: var(--glass-shade-1) !important;
+--background-base-lower: var(--glass-shade-1) !important;
 
-  /* Server list and title bar: darkened a bit more */
-  --background-tertiary: var(--glass-shade-2) !important;
-  --background-base-lowest: var(--glass-shade-2) !important;
-  --bg-overlay-app-frame: var(--glass-shade-2) !important;
+/* Server list & title bar */
+--background-tertiary: var(--glass-shade-2) !important;
+--background-base-lowest: var(--glass-shade-2) !important;
+--bg-overlay-app-frame: var(--glass-shade-2) !important;
 
-  /* Menus, popouts, dialogs and cards: more opaque for readability */
-  --background-floating: var(--glass-float) !important;
-  --background-accent: var(--glass-float) !important;
-  --background-surface-high: var(--glass-float) !important;
-  --background-surface-higher: var(--glass-float) !important;
-  --background-surface-highest: var(--glass-float) !important;
-  --bg-overlay-floating: var(--glass-float) !important;
-  --modal-background: var(--glass-float) !important;
-  --modal-footer-background: var(--glass-shade-1) !important;
+/* Floating elements (menus, dialogs) */
+--background-floating: var(--glass-float) !important;
+--background-accent: var(--glass-float) !important;
+--background-surface-high: var(--glass-float) !important;
+--background-surface-higher: var(--glass-float) !important;
+--background-surface-highest: var(--glass-float) !important;
+--bg-overlay-floating: var(--glass-float) !important;
+--modal-background: var(--glass-float) !important;
+--modal-footer-background: var(--glass-shade-1) !important;
 
-  /* Input fields */
-  --channeltextarea-background: var(--glass-input) !important;
-  --input-background: var(--glass-input) !important;
-  --deprecated-text-input-bg: var(--glass-input) !important;
-  --deprecated-card-bg: var(--glass-shade-1) !important;
-  --deprecated-store-bg: transparent !important;
+/* Inputs */
+--channeltextarea-background: var(--glass-input) !important;
+--input-background: var(--glass-input) !important;
+--deprecated-text-input-bg: var(--glass-input) !important;
+--deprecated-card-bg: var(--glass-shade-1) !important;
+--deprecated-store-bg: transparent !important;
 
-  /* Scrollbars */
-  --scrollbar-auto-track: transparent !important;
-  --scrollbar-thin-track: transparent !important;
+/* Misc */
+--scrollbar-auto-track: transparent !important;
+--scrollbar-thin-track: transparent !important;
 }
 
-/* =====================================================================
-   Full-screen settings get their own, more readable surface
-   ===================================================================== */
-[class*="standardSidebarView_"] {
-  background: var(--glass-float) !important;
-  -webkit-backdrop-filter: blur(var(--glass-blur));
-  backdrop-filter: blur(var(--glass-blur));
+/* Settings background /
+[class="standardSidebarView_"] {
+background: var(--glass-float) !important;
+backdrop-filter: blur(var(--glass-blur));
 }
 
-/* =====================================================================
-   Blur for floating elements (menus, popouts, dialogs, tooltips)
-   ===================================================================== */
+/* Floating elements blur /
 [role="menu"],
 [role="dialog"],
 [role="listbox"],
-[class*="popout_"],
+[class="popout_"],
 [class*="tooltip_"],
 [class*="autocomplete_"] {
-  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(1.3);
-  backdrop-filter: blur(var(--glass-blur)) saturate(1.3);
+backdrop-filter: blur(var(--glass-blur)) saturate(1.3);
 }
 
-/* =====================================================================
-   Readability
-   ===================================================================== */
-[class*="chatContent_"],
+/* Fix text readability /
+[class="chatContent_"],
 [class*="sidebar_"],
 [class*="members_"],
 [class*="privateChannels_"] {
-  text-shadow: var(--glass-text-shadow);
+text-shadow: var(--glass-text-shadow);
 }
